@@ -281,7 +281,7 @@ export default function Home() {
     // Seeding Prompt for Empty Database
     if (vehicles.length === 0 && bookings.length === 0) {
       return (
-        <div className="p-8 bg-zinc-50 border border-zinc-200 rounded-xl text-center max-w-lg mx-auto mt-12 space-y-5">
+        <div className="p-8 bg-white border border-zinc-200 rounded-xl text-center max-w-lg mx-auto mt-12 space-y-5">
           <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-100">
             <Database className="w-6 h-6" />
           </div>
@@ -358,7 +358,7 @@ export default function Home() {
   const openAlertsCount = alerts.filter((a) => a.status === "open").length;
 
   return (
-    <div className="flex w-full min-h-screen bg-zinc-50/50 font-sans text-zinc-900 overflow-x-hidden antialiased">
+    <div className="flex w-full min-h-screen bg-gray-200 font-sans text-zinc-900 overflow-x-hidden antialiased">
       {/* Sidebar navigation */}
       <Sidebar
         currentTab={currentTab}

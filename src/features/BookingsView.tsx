@@ -68,20 +68,20 @@ export default function BookingsView({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in duration-250">
       {/* Title Header with Add Button */}
-      <div className="flex items-center justify-between pb-2 border-b border-zinc-200">
+      <div className="flex items-center justify-between pb-4 border-b border-zinc-200/70">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900 tracking-tight">
+          <h1 className="text-xl font-bold text-zinc-900 tracking-tight">
             Bookings Control
           </h1>
-          <p className="text-xs text-zinc-500 font-medium mt-0.5">
-            Manage rentals, evaluate customer risks, and assign vehicles
+          <p className="text-[11px] text-zinc-400 font-bold uppercase tracking-wider mt-1">
+            Dispatch, reschedule, and evaluate customer risk levels
           </p>
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-white bg-emerald-600 border border-emerald-700 hover:bg-emerald-700 rounded-lg shadow-sm transition-all"
+          className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg shadow-sm border border-emerald-700 transition-all cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" />
           Create New Booking
@@ -89,34 +89,34 @@ export default function BookingsView({
       </div>
 
       {/* Bookings Table */}
-      <div className="bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="border-b border-zinc-100 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider bg-zinc-50/20">
-                <th className="px-5 py-3 font-medium">Customer</th>
-                <th className="px-5 py-3 font-medium">Assigned Vehicle</th>
-                <th className="px-5 py-3 font-medium">Status</th>
-                <th className="px-5 py-3 font-medium">Schedule (Start / End)</th>
-                <th className="px-5 py-3 font-medium text-center">Risk Score</th>
-                <th className="px-5 py-3 font-medium text-right">Actions</th>
+              <tr className="border-b border-zinc-100 text-[10px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-50/10">
+                <th className="px-5 py-3 font-semibold">Customer</th>
+                <th className="px-5 py-3 font-semibold">Assigned Vehicle</th>
+                <th className="px-5 py-3 font-semibold">Status</th>
+                <th className="px-5 py-3 font-semibold">Schedule (Start / End)</th>
+                <th className="px-5 py-3 font-semibold text-center">Risk Index</th>
+                <th className="px-5 py-3 font-semibold text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-100 text-xs">
               {bookings.map((booking) => {
                 const isReassigning = reassigningId === booking._id;
                 return (
-                  <tr key={booking._id} className="hover:bg-zinc-50/10">
-                    <td className="px-5 py-4 font-semibold text-zinc-950">
+                  <tr key={booking._id} className="hover:bg-zinc-50/20 transition-colors duration-150">
+                    <td className="px-5 py-4 font-bold text-zinc-900">
                       {booking.customerName}
                     </td>
-                    <td className="px-5 py-4 text-zinc-700">
+                    <td className="px-5 py-4 text-zinc-700 font-medium">
                       {isReassigning ? (
                         <div className="flex items-center gap-2">
                           <select
                             value={newVehicleId}
                             onChange={(e) => setNewVehicleId(e.target.value)}
-                            className="px-2 py-1 bg-white border border-zinc-200 rounded text-xs text-zinc-800"
+                            className="px-2 py-1 bg-white border border-zinc-200 rounded text-xs text-zinc-800 focus:outline-none"
                           >
                             <option value="">Select Vehicle...</option>
                             {availableVehicles.map((v) => (
@@ -127,13 +127,13 @@ export default function BookingsView({
                           </select>
                           <button
                             onClick={() => handleReassignSubmit(booking._id)}
-                            className="px-2 py-1 bg-emerald-500 text-white rounded text-[10px] font-medium"
+                            className="px-2 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded text-[10px] font-bold cursor-pointer"
                           >
                             Assign
                           </button>
                           <button
                             onClick={() => setReassigningId(null)}
-                            className="px-2 py-1 bg-zinc-100 text-zinc-700 rounded text-[10px] font-medium"
+                            className="px-2 py-1 bg-zinc-100 border border-zinc-200 text-zinc-700 rounded text-[10px] font-bold cursor-pointer"
                           >
                             Cancel
                           </button>
@@ -150,9 +150,9 @@ export default function BookingsView({
                                 setNewVehicleId("");
                               }}
                               title="Reassign Vehicle"
-                              className="p-1 text-zinc-400 hover:text-zinc-900 rounded transition-colors"
+                              className="p-1 text-zinc-400 hover:text-zinc-800 hover:bg-zinc-100 rounded transition-colors cursor-pointer"
                             >
-                              <ArrowRightLeft className="w-3 h-3" />
+                              <ArrowRightLeft className="w-3.5 h-3.5" />
                             </button>
                           )}
                         </div>
@@ -160,32 +160,32 @@ export default function BookingsView({
                     </td>
                     <td className="px-5 py-4">
                       <span
-                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                        className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                           booking.status === "completed"
                             ? "bg-emerald-50 text-emerald-700 border-emerald-100"
                             : booking.status === "ongoing"
-                            ? "bg-blue-50 text-blue-700 border-blue-100"
+                            ? "bg-sky-50 text-sky-700 border-sky-100"
                             : booking.status === "late"
-                            ? "bg-rose-50 text-rose-700 border-rose-100"
-                            : "bg-zinc-100 text-zinc-700 border-zinc-200"
+                            ? "bg-rose-50 text-rose-700 border-rose-105"
+                            : "bg-zinc-100 text-zinc-600 border-zinc-200"
                         }`}
                       >
                         {booking.status}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-zinc-500 space-y-0.5">
+                    <td className="px-5 py-4 text-zinc-500 font-medium space-y-0.5">
                       <div className="flex items-center gap-1 text-zinc-700">
-                        <span className="font-medium">Out:</span>
+                        <span className="text-zinc-400 font-bold">Out:</span>
                         <span>{new Date(booking.startTime).toLocaleString([], { dateStyle: "short", timeStyle: "short" })}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <span className="font-medium text-zinc-400">In:</span>
+                        <span className="text-zinc-400 font-bold">In:</span>
                         <span>{new Date(booking.endTime).toLocaleString([], { dateStyle: "short", timeStyle: "short" })}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-center font-medium">
-                      <div className="flex items-center justify-center gap-1.5">
-                        <div className="w-12 bg-zinc-100 h-1.5 rounded-full overflow-hidden">
+                    <td className="px-5 py-4 text-center font-bold">
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="w-12 bg-zinc-100 h-1.5 rounded-full overflow-hidden border border-zinc-200/50">
                           <div
                             className={`h-full ${
                               booking.riskScore >= 70
@@ -198,7 +198,7 @@ export default function BookingsView({
                           />
                         </div>
                         <span
-                          className={`font-semibold ${
+                          className={`text-[10px] ${
                             booking.riskScore >= 70
                               ? "text-rose-600"
                               : booking.riskScore >= 40
@@ -210,11 +210,11 @@ export default function BookingsView({
                         </span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-right space-x-1">
+                    <td className="px-5 py-4 text-right space-x-1 whitespace-nowrap">
                       {booking.status === "confirmed" && (
                         <button
                           onClick={() => onUpdateBooking(booking._id, { status: "ongoing" })}
-                          className="px-2.5 py-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100/60 rounded-md transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-md transition-colors cursor-pointer"
                         >
                           Dispatch
                         </button>
@@ -222,7 +222,7 @@ export default function BookingsView({
                       {booking.status === "ongoing" && (
                         <button
                           onClick={() => onUpdateBooking(booking._id, { status: "completed" })}
-                          className="px-2.5 py-1 text-[10px] font-semibold text-indigo-700 bg-indigo-50 border border-indigo-100 hover:bg-indigo-100/60 rounded-md transition-colors"
+                          className="px-2.5 py-1 text-[10px] font-bold text-indigo-700 bg-indigo-50 hover:bg-indigo-100 border border-indigo-100 rounded-md transition-colors cursor-pointer"
                         >
                           Return Vehicle
                         </button>
@@ -231,7 +231,7 @@ export default function BookingsView({
                         <button
                           onClick={() => onMarkAsLate(booking._id)}
                           title="Flag as Late"
-                          className="p-1.5 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors inline-flex"
+                          className="p-1.5 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors inline-flex cursor-pointer"
                         >
                           <AlertOctagon className="w-3.5 h-3.5" />
                         </button>
@@ -239,7 +239,7 @@ export default function BookingsView({
                       <button
                         onClick={() => onDeleteBooking(booking._id)}
                         title="Delete Booking"
-                        className="p-1.5 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors inline-flex"
+                        className="p-1.5 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors inline-flex cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -249,7 +249,7 @@ export default function BookingsView({
               })}
               {bookings.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="text-center py-8 text-zinc-400 font-medium">
+                  <td colSpan={6} className="text-center py-12 text-zinc-400 font-semibold bg-white">
                     No active bookings found.
                   </td>
                 </tr>
@@ -261,23 +261,23 @@ export default function BookingsView({
 
       {/* Booking Creation Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-900/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950/35 backdrop-blur-sm">
           <div className="w-full max-w-md bg-white border border-zinc-200 rounded-xl shadow-lg overflow-hidden animate-in fade-in zoom-in-95 duration-150">
             <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between">
-              <h2 className="text-sm font-semibold text-zinc-950">
-                New Booking Dispatch
+              <h2 className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+                Create New Booking
               </h2>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-zinc-400 hover:text-zinc-600 p-1 hover:bg-zinc-50 rounded-full"
+                className="text-zinc-400 hover:text-zinc-600 p-1 hover:bg-zinc-50 rounded-full cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <form onSubmit={handleSubmit} className="p-5 space-y-4">
+            <form onSubmit={handleSubmit} className="p-5 space-y-4 font-semibold text-xs text-zinc-700">
               <div className="space-y-1">
-                <label className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block">
-                  Customer / Business Name
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
+                  Customer Name
                 </label>
                 <input
                   type="text"
@@ -285,35 +285,35 @@ export default function BookingsView({
                   placeholder="e.g. Acme Corporation"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-zinc-200 rounded-lg focus:outline-none focus:border-zinc-400"
+                  className="w-full px-3 py-2 border border-zinc-250 rounded-lg focus:outline-none focus:border-zinc-400 text-zinc-800 font-medium"
                 />
               </div>
 
               <div className="space-y-1">
-                <label className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block">
-                  Assign Fleet Vehicle (Available)
+                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
+                  Vehicle Assignee
                 </label>
                 <select
                   required
                   value={vehicleId}
                   onChange={(e) => setVehicleId(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-zinc-200 rounded-lg bg-white focus:outline-none focus:border-zinc-400"
+                  className="w-full px-3 py-2 border border-zinc-250 rounded-lg bg-white focus:outline-none focus:border-zinc-400 text-zinc-800 font-medium"
                 >
-                  <option value="">Select vehicle...</option>
+                  <option value="">Select available vehicle...</option>
                   {availableVehicles.map((v) => (
                     <option key={v._id} value={v._id}>
                       {v.name} ({v.type})
                     </option>
                   ))}
                   {availableVehicles.length === 0 && (
-                    <option disabled>No available vehicles. Send one back first.</option>
+                    <option disabled>No vehicles available in depot.</option>
                   )}
                 </select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block">
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
                     Pick-up Time
                   </label>
                   <input
@@ -321,11 +321,11 @@ export default function BookingsView({
                     required
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
-                    className="w-full px-3 py-2 text-xs border border-zinc-200 rounded-lg focus:outline-none focus:border-zinc-400"
+                    className="w-full px-3 py-2 border border-zinc-250 rounded-lg focus:outline-none focus:border-zinc-400 text-zinc-800 font-medium"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold text-zinc-500 uppercase tracking-wider block">
+                  <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-wider block">
                     Drop-off Time
                   </label>
                   <input
@@ -333,24 +333,24 @@ export default function BookingsView({
                     required
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
-                    className="w-full px-3 py-2 text-xs border border-zinc-200 rounded-lg focus:outline-none focus:border-zinc-400"
+                    className="w-full px-3 py-2 border border-zinc-250 rounded-lg focus:outline-none focus:border-zinc-400 text-zinc-800 font-medium"
                   />
                 </div>
               </div>
 
-              <div className="pt-2 flex justify-end gap-2">
+              <div className="pt-3 border-t border-zinc-100 flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 border border-zinc-200 text-zinc-700 bg-white hover:bg-zinc-50 text-xs font-semibold rounded-lg"
+                  className="px-4 py-2 border border-zinc-200 hover:border-zinc-300 text-zinc-700 bg-white hover:bg-zinc-50 text-xs font-bold rounded-lg cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-lg border border-emerald-700"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg border border-emerald-700 cursor-pointer shadow-sm"
                 >
-                  Dispatch
+                  Dispatch Booking
                 </button>
               </div>
             </form>

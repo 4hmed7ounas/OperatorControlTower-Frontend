@@ -41,126 +41,126 @@ export default function DashboardView({
   const lateBookings = bookings.filter((b) => b.status === "late").length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 animate-in fade-in duration-250">
       {/* Title Header with Refresh Button */}
-      <div className="flex items-center justify-between pb-2 border-b border-zinc-200">
+      <div className="flex items-center justify-between pb-4 border-b border-zinc-200/70">
         <div>
-          <h1 className="text-2xl font-semibold text-zinc-900 tracking-tight">
+          <h1 className="text-xl font-bold text-zinc-900 tracking-tight">
             Ops Control Tower
           </h1>
-          <p className="text-xs text-zinc-500 font-medium mt-0.5">
-            Real-time fleet intelligence and command console
+          <p className="text-[11px] text-zinc-400 font-bold uppercase tracking-wider mt-1">
+            Real-time fleet operations & AI command center
           </p>
         </div>
         <button
           onClick={onRefresh}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-zinc-700 bg-white border border-zinc-200 rounded-lg shadow-sm hover:bg-zinc-50 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-zinc-700 bg-white border border-zinc-200 hover:border-zinc-300 rounded-lg shadow-sm hover:bg-zinc-50 transition-all cursor-pointer"
         >
-          <RefreshCw className="w-3.5 h-3.5" />
-          Refresh Control Tower
+          <RefreshCw className="w-3.5 h-3.5 text-zinc-400" />
+          Refresh metrics
         </button>
       </div>
 
       {/* KPI Cards Row */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* KPI: Active Bookings */}
-        <div className="p-5 bg-white border border-zinc-200 rounded-xl shadow-sm flex items-center justify-between">
+        <div className="p-5 bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
           <div className="space-y-1">
-            <span className="text-xs text-zinc-500 font-semibold uppercase tracking-wider block">
-              Active Bookings
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">
+              Active Rentals
             </span>
-            <span className="text-2xl font-bold text-zinc-900 block">
+            <span className="text-2xl font-extrabold text-zinc-900 block tracking-tight">
               {activeBookings}
             </span>
-            <span className="text-[10px] text-zinc-400 font-medium block">
-              Currently ongoing or late
+            <span className="text-[10px] text-zinc-400 font-semibold block">
+              Currently on the road
             </span>
           </div>
-          <div className="w-12 h-12 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600">
-            <CalendarCheck className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100/50 shadow-sm">
+            <CalendarCheck className="w-4.5 h-4.5" />
           </div>
         </div>
 
         {/* KPI: Active Vehicles */}
-        <div className="p-5 bg-white border border-zinc-200 rounded-xl shadow-sm flex items-center justify-between">
+        <div className="p-5 bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
           <div className="space-y-1">
-            <span className="text-xs text-zinc-500 font-semibold uppercase tracking-wider block">
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">
               Vehicles In-Use
             </span>
-            <span className="text-2xl font-bold text-zinc-900 block">
+            <span className="text-2xl font-extrabold text-zinc-900 block tracking-tight">
               {activeVehicles}
             </span>
-            <span className="text-[10px] text-zinc-400 font-medium block">
-              Out of {vehicles.length} total vehicles
+            <span className="text-[10px] text-zinc-400 font-semibold block">
+              Active out of {vehicles.length} total
             </span>
           </div>
-          <div className="w-12 h-12 rounded-lg bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600">
-            <Car className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-lg bg-sky-50 text-sky-600 flex items-center justify-center border border-sky-100/50 shadow-sm">
+            <Car className="w-4.5 h-4.5" />
           </div>
         </div>
 
         {/* KPI: Open Alerts */}
-        <div className="p-5 bg-white border border-zinc-200 rounded-xl shadow-sm flex items-center justify-between">
+        <div className="p-5 bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
           <div className="space-y-1">
-            <span className="text-xs text-zinc-500 font-semibold uppercase tracking-wider block">
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">
               Open Alerts
             </span>
-            <span className="text-2xl font-bold text-zinc-900 block">
+            <span className="text-2xl font-extrabold text-zinc-900 block tracking-tight">
               {openAlertsCount}
             </span>
-            <span className="text-[10px] text-red-500 font-medium block">
-              {highSeverityAlertsCount} high severity unresolved
+            <span className="text-[10px] text-rose-600 font-semibold block">
+              {highSeverityAlertsCount} critical bottlenecks
             </span>
           </div>
-          <div className="w-12 h-12 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
-            <AlertTriangle className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100/50 shadow-sm">
+            <AlertTriangle className="w-4.5 h-4.5" />
           </div>
         </div>
 
         {/* KPI: Late Bookings */}
-        <div className="p-5 bg-white border border-zinc-200 rounded-xl shadow-sm flex items-center justify-between">
+        <div className="p-5 bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex items-center justify-between hover:shadow-md hover:-translate-y-0.5 transition-all duration-200">
           <div className="space-y-1">
-            <span className="text-xs text-zinc-500 font-semibold uppercase tracking-wider block">
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">
               Late Statuses
             </span>
-            <span className="text-2xl font-bold text-zinc-900 block">
+            <span className="text-2xl font-extrabold text-zinc-900 block tracking-tight">
               {lateBookings}
             </span>
-            <span className="text-[10px] text-zinc-400 font-medium block">
-              Late pickups & overdue returns
+            <span className="text-[10px] text-zinc-400 font-semibold block">
+              Overdue pick-ups & returns
             </span>
           </div>
-          <div className="w-12 h-12 rounded-lg bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600">
-            <AlertOctagon className="w-5 h-5" />
+          <div className="w-10 h-10 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100/50 shadow-sm">
+            <AlertOctagon className="w-4.5 h-4.5" />
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Side: Tables (Bookings + Fleet) */}
+        {/* Left Section: Operational Tables (Col Span 2) */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Quick Bookings Table */}
-          <div className="bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/50">
-              <h2 className="text-sm font-semibold text-zinc-900">
-                Active & Upcoming Rentals
+          {/* Active Bookings Summary */}
+          <div className="bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
+            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/30">
+              <h2 className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+                Live Dispatch Log
               </h2>
-              <span className="text-xs text-zinc-400 font-medium">
-                {bookings.length} total bookings
+              <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200/30">
+                {bookings.length} active bookings
               </span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-100 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider bg-zinc-50/20">
-                    <th className="px-5 py-3 font-medium">Customer</th>
-                    <th className="px-5 py-3 font-medium">Vehicle</th>
-                    <th className="px-5 py-3 font-medium">Status</th>
-                    <th className="px-5 py-3 font-medium">Duration</th>
-                    <th className="px-5 py-3 font-medium text-right">Risk Score</th>
+                  <tr className="border-b border-zinc-100 text-[10px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-50/10">
+                    <th className="px-5 py-3 font-semibold">Customer</th>
+                    <th className="px-5 py-3 font-semibold">Vehicle</th>
+                    <th className="px-5 py-3 font-semibold">Status</th>
+                    <th className="px-5 py-3 font-semibold">Duration</th>
+                    <th className="px-5 py-3 font-semibold text-right">Risk Factor</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-50 text-xs">
+                <tbody className="divide-y divide-zinc-100 text-xs">
                   {bookings.slice(0, 5).map((booking) => {
                     const durationHours = Math.round(
                       (new Date(booking.endTime).getTime() -
@@ -168,39 +168,39 @@ export default function DashboardView({
                         (1000 * 60 * 60)
                     );
                     return (
-                      <tr key={booking._id} className="hover:bg-zinc-50/30">
-                        <td className="px-5 py-3.5 font-semibold text-zinc-950">
+                      <tr key={booking._id} className="hover:bg-zinc-50/20 transition-all duration-150">
+                        <td className="px-5 py-3.5 font-bold text-zinc-900">
                           {booking.customerName}
                         </td>
-                        <td className="px-5 py-3.5 text-zinc-600">
+                        <td className="px-5 py-3.5 font-medium text-zinc-600">
                           {booking.vehicleId ? booking.vehicleId.name : "Unassigned"}
                         </td>
                         <td className="px-5 py-3.5">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                               booking.status === "completed"
                                 ? "bg-emerald-50 text-emerald-700 border-emerald-100"
                                 : booking.status === "ongoing"
-                                ? "bg-blue-50 text-blue-700 border-blue-100"
+                                ? "bg-sky-50 text-sky-700 border-sky-100"
                                 : booking.status === "late"
-                                ? "bg-rose-50 text-rose-700 border-rose-100"
-                                : "bg-zinc-100 text-zinc-700 border-zinc-200"
+                                ? "bg-rose-50 text-rose-700 border-rose-105"
+                                : "bg-zinc-100 text-zinc-600 border-zinc-200"
                             }`}
                           >
                             {booking.status}
                           </span>
                         </td>
-                        <td className="px-5 py-3.5 text-zinc-500">
-                          {durationHours}h rental
+                        <td className="px-5 py-3.5 text-zinc-500 font-medium">
+                          {durationHours}h duration
                         </td>
-                        <td className="px-5 py-3.5 text-right font-medium">
+                        <td className="px-5 py-3.5 text-right">
                           <span
-                            className={`px-1.5 py-0.5 rounded ${
+                            className={`px-2 py-0.5 rounded-md font-bold text-[10px] ${
                               booking.riskScore >= 70
-                                ? "text-rose-600 bg-rose-50"
+                                ? "text-rose-700 bg-rose-50 border border-rose-100"
                                 : booking.riskScore >= 40
-                                ? "text-amber-600 bg-amber-50"
-                                : "text-emerald-600 bg-emerald-50"
+                                ? "text-amber-700 bg-amber-50 border border-amber-100"
+                                : "text-emerald-700 bg-emerald-50 border border-emerald-100"
                             }`}
                           >
                             {booking.riskScore}%
@@ -211,8 +211,8 @@ export default function DashboardView({
                   })}
                   {bookings.length === 0 && (
                     <tr>
-                      <td colSpan={5} className="text-center py-6 text-zinc-400">
-                        No bookings found. Click Seed Database or create one.
+                      <td colSpan={5} className="text-center py-8 text-zinc-400 font-medium">
+                        No active dispatch logs found. Seed database to populate.
                       </td>
                     </tr>
                   )}
@@ -221,57 +221,57 @@ export default function DashboardView({
             </div>
           </div>
 
-          {/* Quick Fleet Table */}
-          <div className="bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden">
-            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/50">
-              <h2 className="text-sm font-semibold text-zinc-900">
-                Fleet Status Overview
+          {/* Fleet status overview */}
+          <div className="bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden">
+            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/30">
+              <h2 className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+                Fleet Diagnostics Tracker
               </h2>
-              <span className="text-xs text-zinc-400 font-medium">
-                {vehicles.length} vehicles
+              <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200/30">
+                {vehicles.length} units
               </span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-zinc-100 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider bg-zinc-50/20">
-                    <th className="px-5 py-3 font-medium">Vehicle Name</th>
-                    <th className="px-5 py-3 font-medium">Status</th>
-                    <th className="px-5 py-3 font-medium text-right">Usage</th>
-                    <th className="px-5 py-3 font-medium text-right">Maintenance Due</th>
+                  <tr className="border-b border-zinc-100 text-[10px] font-bold text-zinc-400 uppercase tracking-wider bg-zinc-50/10">
+                    <th className="px-5 py-3 font-semibold">Vehicle</th>
+                    <th className="px-5 py-3 font-semibold">Diagnostics</th>
+                    <th className="px-5 py-3 font-semibold text-right">Runtime Hours</th>
+                    <th className="px-5 py-3 font-semibold text-right">Maintenance Target</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-50 text-xs">
+                <tbody className="divide-y divide-zinc-100 text-xs">
                   {vehicles.slice(0, 5).map((vehicle) => {
                     const isCloseToMaint =
                       vehicle.maintenanceDueHours - vehicle.totalUsageHours <= 10;
                     return (
-                      <tr key={vehicle._id} className="hover:bg-zinc-50/30">
-                        <td className="px-5 py-3.5 font-semibold text-zinc-950">
+                      <tr key={vehicle._id} className="hover:bg-zinc-50/20 transition-all duration-150">
+                        <td className="px-5 py-3.5 font-bold text-zinc-900">
                           {vehicle.name}
                         </td>
                         <td className="px-5 py-3.5">
                           <span
-                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold border ${
+                            className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ${
                               vehicle.status === "available"
                                 ? "bg-emerald-50 text-emerald-700 border-emerald-100"
                                 : vehicle.status === "in_use"
-                                ? "bg-blue-50 text-blue-700 border-blue-100"
-                                : "bg-amber-50 text-amber-700 border-amber-100"
+                                ? "bg-sky-50 text-sky-700 border-sky-100"
+                                : "bg-amber-50 text-amber-700 border-amber-105"
                             }`}
                           >
                             {vehicle.status}
                           </span>
                         </td>
-                        <td className="px-5 py-3.5 text-right font-medium text-zinc-700">
+                        <td className="px-5 py-3.5 text-right font-bold text-zinc-700">
                           {vehicle.totalUsageHours}h
                         </td>
                         <td className="px-5 py-3.5 text-right">
                           <span
-                            className={`px-1.5 py-0.5 rounded font-medium ${
+                            className={`px-2 py-0.5 rounded font-bold text-[10px] border ${
                               isCloseToMaint || vehicle.totalUsageHours >= vehicle.maintenanceDueHours
-                                ? "text-rose-600 bg-rose-50"
-                                : "text-zinc-500 bg-zinc-100"
+                                ? "text-rose-700 bg-rose-50 border-rose-100"
+                                : "text-zinc-600 bg-zinc-50 border-zinc-200/70"
                             }`}
                           >
                             {vehicle.maintenanceDueHours}h
@@ -282,8 +282,8 @@ export default function DashboardView({
                   })}
                   {vehicles.length === 0 && (
                     <tr>
-                      <td colSpan={4} className="text-center py-6 text-zinc-400">
-                        No vehicles found. Click Seed Database to begin.
+                      <td colSpan={4} className="text-center py-8 text-zinc-400 font-medium">
+                        No fleet diagnostic records found.
                       </td>
                     </tr>
                   )}
@@ -293,59 +293,59 @@ export default function DashboardView({
           </div>
         </div>
 
-        {/* Right Side: Alerts Panel */}
+        {/* Right Section: Ops Alerts feed panel */}
         <div className="space-y-6">
-          <div className="bg-white border border-zinc-200 rounded-xl shadow-sm overflow-hidden flex flex-col h-full min-h-[420px]">
-            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/50">
-              <h2 className="text-sm font-semibold text-zinc-900 flex items-center gap-2">
-                Active Alerts Panel
+          <div className="bg-white border border-zinc-200/80 rounded-xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden flex flex-col h-full min-h-[420px]">
+            <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/30">
+              <h2 className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+                Critical Alerts Feed
               </h2>
-              <span className="px-2 py-0.5 text-[10px] font-semibold rounded-full bg-zinc-100 text-zinc-600 border border-zinc-200">
-                {openAlerts.length} open
+              <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-rose-50 text-rose-700 border border-rose-100">
+                {openAlerts.length} unresolved
               </span>
             </div>
             
-            <div className="p-4 space-y-3 flex-1 overflow-y-auto max-h-[480px]">
+            <div className="p-4 space-y-3.5 flex-1 overflow-y-auto max-h-[500px]">
               {openAlerts.map((alert) => (
                 <div
                   key={alert._id}
-                  className={`p-4 border rounded-lg flex flex-col justify-between gap-3 transition-all ${
+                  className={`p-4 border rounded-xl flex flex-col justify-between gap-3 shadow-[0_1.5px_4px_rgba(0,0,0,0.01)] transition-all hover:shadow-md ${
                     alert.severity === "high"
-                      ? "bg-rose-50/30 border-rose-100"
+                      ? "border-l-4 border-l-rose-500 bg-rose-50/10 border-rose-100/70"
                       : alert.severity === "medium"
-                      ? "bg-amber-50/30 border-amber-100"
-                      : "bg-blue-50/20 border-blue-100"
+                      ? "border-l-4 border-l-amber-500 bg-amber-50/10 border-amber-100/70"
+                      : "border-l-4 border-l-indigo-400 bg-indigo-50/10 border-indigo-100/70"
                   }`}
                 >
-                  <div className="space-y-1">
+                  <div className="space-y-1.5">
                     <div className="flex items-center justify-between">
                       <span
                         className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded border ${
                           alert.severity === "high"
                             ? "bg-rose-50 text-rose-700 border-rose-100"
                             : alert.severity === "medium"
-                            ? "bg-amber-50 text-amber-700 border-amber-100"
-                            : "bg-blue-50 text-blue-700 border-blue-100"
+                            ? "bg-amber-50 text-amber-700 border-amber-105"
+                            : "bg-indigo-50 text-indigo-700 border-indigo-100"
                         }`}
                       >
-                        {alert.severity} Priority
+                        {alert.severity} priority
                       </span>
-                      <span className="text-[10px] text-zinc-400 font-medium">
+                      <span className="text-[10px] text-zinc-400 font-bold">
                         {new Date(alert.createdAt).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </span>
                     </div>
-                    <p className="text-xs font-semibold text-zinc-900 leading-normal">
+                    <p className="text-xs font-bold text-zinc-900 leading-relaxed">
                       {alert.message}
                     </p>
                   </div>
 
-                  <div className="flex items-center justify-end">
+                  <div className="flex items-center justify-end pt-1">
                     <button
                       onClick={() => onExplainAlert(alert.message)}
-                      className="px-2.5 py-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-100 hover:bg-emerald-100/60 rounded-md transition-colors"
+                      className="px-2.5 py-1 text-[10px] font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-100 rounded-md transition-colors cursor-pointer"
                     >
                       Explain with Copilot
                     </button>
@@ -354,9 +354,9 @@ export default function DashboardView({
               ))}
               
               {openAlerts.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-12 text-center text-zinc-400 h-full">
-                  <span className="text-3xl mb-2">🎉</span>
-                  <p className="text-xs font-medium text-zinc-500">
+                <div className="flex flex-col items-center justify-center py-16 text-center text-zinc-400 h-full">
+                  <span className="text-3xl mb-3">🎉</span>
+                  <p className="text-xs font-bold text-zinc-500">
                     All clear! No open operational alerts.
                   </p>
                 </div>
