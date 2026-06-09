@@ -9,7 +9,7 @@ import BookingsView from "../features/BookingsView";
 import FleetView from "../features/FleetView";
 import AlertsView from "../features/AlertsView";
 import ActionLogsView from "../features/ActionLogsView";
-import { Database, AlertTriangle, Sparkles } from "lucide-react";
+import { Database, AlertTriangle, Sparkles, RefreshCw } from "lucide-react";
 
 interface Message {
   id: string;

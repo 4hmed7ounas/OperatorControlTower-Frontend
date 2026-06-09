@@ -154,7 +154,7 @@ export default function CopilotPanel({
           </div>
           <div>
             <span className="font-semibold text-zinc-950 text-sm tracking-tight block">Ops Copilot</span>
-            <span className="text-[10px] text-zinc-400 font-semibold block flex items-center gap-1">
+            <span className="text-[10px] text-zinc-400 font-semibold flex items-center gap-1">
               <Sparkles className="w-2.5 h-2.5 text-emerald-500 fill-emerald-500" />
               Llama 3 Active
             </span>
