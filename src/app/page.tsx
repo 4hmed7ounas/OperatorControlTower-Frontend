@@ -378,6 +378,8 @@ export default function Home() {
         chatHistory={chatHistory}
         setChatHistory={setChatHistory}
         onGlobalRefresh={refreshData}
+        bookings={bookings}
+        vehicles={vehicles}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Send, Bot, User, Sparkles, CheckCircle2, AlertCircle, RefreshCw, HelpCircle } from "lucide-react";
+import { Send, Bot, User, Sparkles, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 
 interface Message {
   id: string;
@@ -20,6 +20,8 @@ interface CopilotPanelProps {
   chatHistory: Message[];
   setChatHistory: React.Dispatch<React.SetStateAction<Message[]>>;
   onGlobalRefresh: () => void;
+  bookings: any[];
+  vehicles: any[];
 }
 
 /**
@@ -117,12 +119,76 @@ function renderMessageText(text: string, isCopilot: boolean) {
   return <div className="space-y-1">{elements}</div>;
 }
 
+/**
+ * Translates developer jargon (action names, raw ObjectIDs) into simple dispatcher terms.
+ */
+function renderHumanActionDetails(action: string, args: any, bookings: any[], vehicles: any[]) {
+  const findBookingName = (id: string) => {
+    const b = bookings.find(x => x._id === id);
+    return b ? b.customerName : `Rental #${id.slice(-4)}`;
+  };
+  
+  const findVehicleName = (id: string) => {
+    const v = vehicles.find(x => x._id === id);
+    return v ? v.name : `Vehicle #${id.slice(-4)}`;
+  };
+
+  switch (action) {
+    case "markBookingAsLate":
+      return (
+        <div className="space-y-1.5">
+          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">Target Rental:</span>
+          <span className="text-sm font-bold text-zinc-900">{findBookingName(args.bookingId)}</span>
+          <p className="text-[11px] text-zinc-500 mt-1">This flags the pick-up as late in the control tower.</p>
+        </div>
+      );
+    case "scheduleMaintenance":
+      return (
+        <div className="space-y-1.5">
+          <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">Target Vehicle:</span>
+          <span className="text-sm font-bold text-zinc-900">{findVehicleName(args.vehicleId)}</span>
+          <p className="text-[11px] text-zinc-500 mt-1">This sends the unit to repair and suspends dispatch availability.</p>
+        </div>
+      );
+    case "reassignVehicle":
+      return (
+        <div className="space-y-2">
+          <div>
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">Move Booking For:</span>
+            <span className="text-sm font-bold text-zinc-900">{findBookingName(args.bookingId)}</span>
+          </div>
+          <div>
+            <span className="text-[10px] text-zinc-400 font-bold uppercase tracking-wider block">To Available Unit:</span>
+            <span className="text-sm font-bold text-zinc-900">{findVehicleName(args.vehicleId)}</span>
+          </div>
+          <p className="text-[11px] text-zinc-500 mt-1">Swaps the assigned unit to prevent customer delay.</p>
+        </div>
+      );
+    case "getRiskyBookings":
+      return (
+        <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
+          Check rentals flagged with elevated risk values.
+        </p>
+      );
+    case "getFleetStatus":
+      return (
+        <p className="text-[11px] text-zinc-500 leading-relaxed font-medium">
+          Pull diagnostic status summary of the active fleet.
+        </p>
+      );
+    default:
+      return <pre className="text-[10px] font-mono bg-zinc-50 p-2 rounded">{JSON.stringify(args, null, 2)}</pre>;
+  }
+}
+
 export default function CopilotPanel({
   onSendMessage,
   onExecuteAction,
   chatHistory,
   setChatHistory,
   onGlobalRefresh,
+  bookings,
+  vehicles,
 }: CopilotPanelProps) {
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -310,28 +376,18 @@ export default function CopilotPanel({
                 {/* Structured Action proposed by AI */}
                 {isCopilot && message.type === "action" && message.action && (
                   <div className="border border-zinc-200 rounded-xl bg-white shadow-sm overflow-hidden text-xs border-l-4 border-l-emerald-500 animate-in fade-in duration-200">
-                    <div className="px-3.5 py-2.5 bg-zinc-50 border-b border-zinc-100 font-bold text-zinc-900 flex items-center gap-2">
+                    <div className="px-3.5 py-2.5 bg-zinc-50 border-b border-zinc-100 font-bold text-zinc-950 flex items-center gap-2">
                       <Sparkles className="w-3.5 h-3.5 text-emerald-500 fill-emerald-500" />
                       Suggested Action
                     </div>
                     
                     <div className="p-3.5 space-y-3 font-semibold text-zinc-700">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] text-zinc-400 uppercase tracking-wider block">
-                          Tool Call:
-                        </span>
-                        <span className="text-zinc-900 font-bold font-mono bg-zinc-150 px-2 py-0.5 rounded border border-zinc-200">
-                          {message.action}
-                        </span>
-                      </div>
-                      
-                      <div className="bg-zinc-950 text-zinc-100 p-3 rounded-lg text-[10px] font-mono border border-zinc-800 overflow-x-auto shadow-inner">
-                        {JSON.stringify(message.args, null, 2)}
-                      </div>
+                      {/* Human Readable Action Summary */}
+                      {renderHumanActionDetails(message.action, message.args, bookings, vehicles)}
 
                       {/* Action States */}
                       {message.actionStatus === "pending" && (
-                        <div className="flex items-center gap-1.5 pt-1">
+                        <div className="flex items-center gap-1.5 pt-1.5 border-t border-zinc-100">
                           <button
                             onClick={() => handleActionRun(message.id, message.action!, message.args)}
                             className="px-3 py-1.5 bg-emerald-600 border border-emerald-700 hover:bg-emerald-700 text-white rounded-lg text-[10px] font-bold flex-1 shadow-sm transition-colors cursor-pointer"
@@ -354,7 +410,7 @@ export default function CopilotPanel({
                       )}
 
                       {message.actionStatus === "running" && (
-                        <div className="text-[10px] text-zinc-500 font-bold flex items-center gap-1.5 pt-1">
+                        <div className="text-[10px] text-zinc-500 font-bold flex items-center gap-1.5 pt-1 border-t border-zinc-100">
                           <RefreshCw className="w-3.5 h-3.5 animate-spin text-zinc-400" />
                           Executing tool service...
                         </div>
@@ -375,7 +431,7 @@ export default function CopilotPanel({
                       )}
 
                       {message.actionStatus === "ignored" && (
-                        <div className="text-[10px] text-zinc-400 italic font-medium">
+                        <div className="text-[10px] text-zinc-400 italic font-medium pt-1 border-t border-zinc-100">
                           Action proposal dismissed.
                         </div>
                       )}

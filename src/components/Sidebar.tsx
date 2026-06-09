@@ -23,7 +23,7 @@ export default function Sidebar({ currentTab, setCurrentTab, openAlertsCount }: 
     { id: "bookings", label: "Bookings", icon: CalendarDays },
     { id: "fleet", label: "Fleet status", icon: Car },
     { id: "alerts", label: "Alerts", icon: AlertTriangle, badge: openAlertsCount },
-    { id: "logs", label: "Audit logs", icon: History },
+    { id: "logs", label: "Activity history", icon: History },
   ];
 
   return (
